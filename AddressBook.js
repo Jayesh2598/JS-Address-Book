@@ -6,7 +6,8 @@ let choice = 0;
 do {
     choice = prompt("Enter choice : 1. Add new contact 2. Edit contact 3. Delete contact 4. Get Contacts Count "
                     +"5. Search persons in city/state 6. View persons in city/state 7. Count persons in city/state " 
-                    +"8. Sort addressBook by name 9. Print address book 0. Exit ");
+                    +"8. Sort addressBook by name 9. Sort by City 10. Sort by State 11. Sort by zip "
+                    +"12. Print address book 0. Exit ");
     switch (choice) {
         case '1':
             let con = takeDetails();
@@ -86,6 +87,24 @@ do {
                 console.log(sortContactsByName());
             break;
         case '9':
+            if (addressBook.length == 0)
+                console.log("No contacts");
+            else
+                console.log(sortContactsByCity());
+            break;
+        case '10':
+            if (addressBook.length == 0)
+                console.log("No contacts");
+            else
+                console.log(sortContactsByState());
+            break;
+        case '11':
+            if (addressBook.length == 0)
+                console.log("No contacts");
+            else
+                console.log(sortContactsByZip());
+            break;
+        case '12':
             addressBook.forEach(contact => console.log(contact.toString()));
             break;
         case '0':
@@ -232,5 +251,23 @@ function countPersons(){
 function sortContactsByName() {
     return addressBook.sort((a, b) => {
         return ((a.firstName < b.firstName) ? -1 : 1)
+    });
+}
+
+function sortContactsByCity() {
+    return addressBook.sort((a, b) => {
+        return ((a.city < b.city) ? -1 : 1)
+    });
+}
+
+function sortContactsByState() {
+    return addressBook.sort((a, b) => {
+        return ((a.state < b.state) ? -1 : 1)
+    });
+}
+
+function sortContactsByZip() {
+    return addressBook.sort((a, b) => {
+        return ((a.zip < b.zip) ? -1 : 1)
     });
 }
