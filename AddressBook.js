@@ -9,8 +9,12 @@ do {
         case '1':
             let con = takeDetails();
             if (con != null) {
-                addressBook.push(con);
-                console.log("Contact added successfully!");
+                if (!duplicateCheck(con)) {
+                    addressBook.push(con);
+                    console.log("Contact added successfully!");
+                }
+                else
+                    console.log("This contact already exists.");
             }
             break;
         case '2':
@@ -137,4 +141,17 @@ function deleteContact() {
         return 0;
     addressBook.splice(addressBook.indexOf(contact), 1);
     return 1;
+}
+
+function duplicateCheck(contact) {
+    if (addressBook.length == 0)
+        return false;
+    let sameContact = addressBook.filter((con) => con.firstName == contact.firstName && con.lastName == contact.lastName 
+                                                && con.address == contact.address && con.city == contact.city 
+                                                && con.state == contact.state && con.zip == contact.zip 
+                                                && con.phoneNo == contact.phoneNo && con.email == contact.email);
+    if (sameContact.length == 0)
+        return false;
+    else
+        return true;
 }
