@@ -4,7 +4,7 @@ const prompt = require('prompt-sync')();
 let addressBook = new Array();
 let choice = 0;
 do {
-    choice = prompt("Enter choice : 1. Add new contact 2. Edit contact 3. Print address book 0. Exit ");
+    choice = prompt("Enter choice : 1. Add new contact 2. Edit contact 3. Delete contact 4. Print address book 0. Exit ");
     switch (choice) {
         case '1':
             let con = takeDetails();
@@ -25,6 +25,17 @@ do {
             }
             break;
         case '3':
+            if (addressBook.length == 0)
+                console.log("No contacts in address book.");
+            else {
+                let con = deleteContact();
+                if (con == 1)
+                    console.log("Contact deleted successfully.");
+                else
+                    console.log("No such contact available.");
+            }
+            break;
+        case '4':
             addressBook.forEach(contact => console.log(contact.toString()));
             break;
         case '0':
@@ -55,7 +66,7 @@ function takeDetails() {
 
 function editContact() {
     let fName = prompt("Enter firstName of contact to edit : ");
-    let lName = prompt("Enter lastName of contact to edit: ");
+    let lName = prompt("Enter lastName of contact to edit : ");
     let contact = addressBook.find((contact) => contact.firstName == fName && contact.lastName == lName);
     if (contact == undefined)
         return 0;
@@ -110,5 +121,15 @@ function editContact() {
                 console.log("Not a valid number. ");
         }
     }
+    return 1;
+}
+
+function deleteContact(){
+    let fName = prompt("Enter firstName of contact to delete : ");
+    let lName = prompt("Enter lastName of contact to delete : ");
+    let contact = addressBook.find((contact) => contact.firstName == fName && contact.lastName == lName);
+    if (contact == undefined)
+        return 0;
+    addressBook.splice(addressBook.indexOf(contact), 1);
     return 1;
 }
