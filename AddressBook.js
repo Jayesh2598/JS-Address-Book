@@ -5,7 +5,8 @@ let addressBook = new Array();
 let choice = 0;
 do {
     choice = prompt("Enter choice : 1. Add new contact 2. Edit contact 3. Delete contact 4. Get Contacts Count "
-                    +"5. Search persons in city/state 6. View persons in city/state 7. Print address book 0. Exit ");
+                    +"5. Search persons in city/state 6. View persons in city/state 7. Count persons in city/state " 
+                    +"8. Print address book 0. Exit ");
     switch (choice) {
         case '1':
             let con = takeDetails();
@@ -68,6 +69,17 @@ do {
                 console.log("No contacts in addressbook.");
             break;
         case '7':
+            if(addressBook.length > 0) {
+                let personsCount = countPersons();
+                if(personsCount === 0)
+                    console.log("No persons found.");
+                else
+                    console.log(`${personsCount} person(s) found.`);
+            }
+            else
+                console.log("No contacts in addressbook.");
+            break;
+        case '8':
             addressBook.forEach(contact => console.log(contact.toString()));
             break;
         case '0':
@@ -193,4 +205,20 @@ function searchPersons(){
             break;
     }
     return persons;
+}
+
+function countPersons(){
+    let count = 0;
+    let choice = prompt("Count persons in city or state : 1. City 2. State ");
+    switch(choice){
+        case '1':
+            let city = prompt("Enter city name : ");
+            count = addressBook.filter((contact) => contact.city === city).reduce((total, value) => {return total + 1;}, 0);
+            break;
+        case '2':
+            let state = prompt("Enter state name : ");
+            count = addressBook.filter((contact) => contact.state === state).reduce((total, value) => {return total + 1;}, 0);
+            break;
+    }
+    return count;
 }
