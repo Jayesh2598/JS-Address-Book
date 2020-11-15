@@ -1,104 +1,40 @@
-class Contact {
+const contactRef = require('./Contact');
+const prompt = require('prompt-sync')();
 
-    // Constructor
-    constructor(...params) {
-        this.firstName = params[0];
-        this.lastName = params[1];
-        this.address = params[2];
-        this.city = params[3];
-        this.state = params[4];
-        this.zip = params[5];
-        this.phoneNo = params[6];
-        this.email = params[7];
-    }
-
-    //getters
-    get firstName() {
-        return this._firstName;
-    }
-    get lastName() {
-        return this._lastName;
-    }
-    get address() {
-        return this._address;
-    }
-    get city() {
-        return this._city;
-    }
-    get state() {
-        return this._state;
-    }
-    get zip() {
-        return this._zip;
-    }
-    get phoneNo() {
-        return this._phoneNo;
-    }
-    get email() {
-        return this._email;
+let addressBook = new Array();
+let choice = 0;
+do {
+    choice = prompt("Enter choice : 1. Add new contact 0. Exit ");
+    switch (choice) {
+        case '1':
+            let con = takeDetails();
+            if (con != null) {
+                addressBook.push(con);
+                console.log("Contact added successfully!");
+            }
+            break;
+        case '0':
+            console.log("Thanks for using the application.");
+            break;
     }
 
-    //setters
-    set firstName(firstName) {
-        let firstNameRegex = RegExp('^[A-Z]{1}[a-z]{2,}$');
-        if (firstNameRegex.test(firstName))
-            this._firstName = firstName;
-        else throw "FirstName invalid.";
-    }
-    set lastName(lastName) {
-        let lastNameRegex = RegExp('^[A-Z]{1}[a-z]{2,}$');
-        if (lastNameRegex.test(lastName))
-            this._lastName = lastName;
-        else throw "LastName invalid.";
-    }
-    set address(address) {
-        let addressRegex = RegExp('[a-zA-Z]{4,}');
-        if (addressRegex.test(address))
-            this._address = address;
-        else throw "Address invalid.";
-    }
-    set city(city) {
-        let cityRegex = RegExp('[a-zA-Z]{4,}');
-        if (cityRegex.test(city))
-            this._city = city;
-        else throw "City invalid.";
-    }
-    set state(state) {
-        let stateRegex = RegExp('[a-zA-Z]{4,}');
-        if (stateRegex.test(state))
-            this._state = state;
-        else throw "State invalid.";
-    }
-    set zip(zip) {
-        let zipRegex = RegExp('^[1-9]{1}[0-9]{2}[\\s]*[0-9]{3}$');
-        if (zipRegex.test(zip))
-            this._zip = zip;
-        else throw "Zip invaild.";
-    }
-    set phoneNo(phoneNo) {
-        let phoneRegex = RegExp("[0-9]{1,2}[' '][7-9][0-9]{9}");
-        if (phoneRegex.test(phoneNo))
-            this._phoneNo = phoneNo;
-        else throw "Phone No invalid.";
-    }
-    set email(email) {
-        let emailRegex = RegExp('[a-zA-Z][a-zA-Z0-9_+-]{2,}([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9]+[.][a-zA-Z]{2,}([.][a-zA-Z]{2,})?$');
-        if (emailRegex.test(email))
-            this._email = email;
-        else throw "Email invalid.";
-    }
+} while (choice != 0);
 
-    //method
-    toString() {
-        return "FirstName : " + this.firstName + ", LastName : " + this.lastName + ", Address : " + this.address + ", City : " + this.city +
-                    ", State : " + this.state + ", Zip : " + this.zip + ", Phone No : " + this.phoneNo + ", Email : " + this.email;
+function takeDetails() {
+    let fName = prompt("Enter firstName : ");
+    let lName = prompt("Enter lastName : ");
+    let address = prompt("Enter address :");
+    let city = prompt("Enter city : ");
+    let state = prompt("Enter state : ");
+    let zip = prompt("Enter zip : ");
+    let phoneNo = prompt("Enter phone no: ");
+    let email = prompt("Enter email : ");
+    let contact = null;
+    try {
+        contact = new contactRef.Contact(fName, lName, address, city, state, zip, phoneNo, email);
     }
-}
-
-try {
-    let contact = new Contact("Frank", "Underwood", "White House", "Washington", "Columbia District", 400800, "91 9999888871", "frank@gmail.com");
-    console.log(contact.toString());
-}
-catch (e) {
-    console.error(e);
+    catch (e) {
+        console.error(e);
+    }
+    return contact;
 }
