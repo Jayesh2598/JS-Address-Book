@@ -6,7 +6,7 @@ let choice = 0;
 do {
     choice = prompt("Enter choice : 1. Add new contact 2. Edit contact 3. Delete contact 4. Get Contacts Count "
                     +"5. Search persons in city/state 6. View persons in city/state 7. Count persons in city/state " 
-                    +"8. Print address book 0. Exit ");
+                    +"8. Sort addressBook by name 9. Print address book 0. Exit ");
     switch (choice) {
         case '1':
             let con = takeDetails();
@@ -80,6 +80,12 @@ do {
                 console.log("No contacts in addressbook.");
             break;
         case '8':
+            if (addressBook.length == 0)
+                console.log("No contacts");
+            else
+                console.log(sortContactsByName());
+            break;
+        case '9':
             addressBook.forEach(contact => console.log(contact.toString()));
             break;
         case '0':
@@ -221,4 +227,10 @@ function countPersons(){
             break;
     }
     return count;
+}
+
+function sortContactsByName() {
+    return addressBook.sort((a, b) => {
+        return ((a.firstName < b.firstName) ? -1 : 1)
+    });
 }
