@@ -5,7 +5,7 @@ let addressBook = new Array();
 let choice = 0;
 do {
     choice = prompt("Enter choice : 1. Add new contact 2. Edit contact 3. Delete contact 4. Get Contacts Count "
-                    +"5. Search person in city/state 6. Print address book 0. Exit ");
+                    +"5. Search persons in city/state 6. View persons in city/state 7. Print address book 0. Exit ");
     switch (choice) {
         case '1':
             let con = takeDetails();
@@ -57,6 +57,17 @@ do {
                 console.log("No contacts in addressbook.");
             break;
         case '6':
+            if(addressBook.length > 0) {
+                let persons = searchPersons();
+                if(persons.length > 0)
+                    persons.forEach(contact => console.log(contact.toString()));
+                else
+                    console.log("No persons found.")
+            }
+            else
+                console.log("No contacts in addressbook.");
+            break;
+        case '7':
             addressBook.forEach(contact => console.log(contact.toString()));
             break;
         case '0':
@@ -169,16 +180,16 @@ function duplicateCheck(contact) {
 }
 
 function searchPersons(){
-    let persons = new Array();
+    let persons = [];
     let choice = prompt("Search persons in city or state : 1. City 2. State ");
     switch(choice){
         case '1':
             let city = prompt("Enter city name : ");
-            persons = addressBook.filter((contact) => contact.city == city);
+            persons = addressBook.filter((contact) => contact.city === city);
             break;
         case '2':
             let state = prompt("Enter state name : ");
-            persons = addressBook.filter((contact) => contact.state == state);
+            persons = addressBook.filter((contact) => contact.state === state);
             break;
     }
     return persons;
