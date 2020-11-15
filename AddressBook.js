@@ -4,7 +4,7 @@ const prompt = require('prompt-sync')();
 let addressBook = new Array();
 let choice = 0;
 do {
-    choice = prompt("Enter choice : 1. Add new contact 2. Edit contact 3. Delete contact 4. Print address book 0. Exit ");
+    choice = prompt("Enter choice : 1. Add new contact 2. Edit contact 3. Delete contact 4. Get Contacts Count 5. Print address book 0. Exit ");
     switch (choice) {
         case '1':
             let con = takeDetails();
@@ -36,6 +36,11 @@ do {
             }
             break;
         case '4':
+            const findTotal = (total, value) => { return total + 1; }
+            let count = addressBook.reduce(findTotal, 0);
+            console.log("No. of contacts in address book = " + count);
+            break;
+        case '5':
             addressBook.forEach(contact => console.log(contact.toString()));
             break;
         case '0':
@@ -124,7 +129,7 @@ function editContact() {
     return 1;
 }
 
-function deleteContact(){
+function deleteContact() {
     let fName = prompt("Enter firstName of contact to delete : ");
     let lName = prompt("Enter lastName of contact to delete : ");
     let contact = addressBook.find((contact) => contact.firstName == fName && contact.lastName == lName);
