@@ -4,7 +4,8 @@ const prompt = require('prompt-sync')();
 let addressBook = new Array();
 let choice = 0;
 do {
-    choice = prompt("Enter choice : 1. Add new contact 2. Edit contact 3. Delete contact 4. Get Contacts Count 5. Print address book 0. Exit ");
+    choice = prompt("Enter choice : 1. Add new contact 2. Edit contact 3. Delete contact 4. Get Contacts Count "
+                    +"5. Search person in city/state 6. Print address book 0. Exit ");
     switch (choice) {
         case '1':
             let con = takeDetails();
@@ -45,6 +46,17 @@ do {
             console.log("No. of contacts in address book = " + count);
             break;
         case '5':
+            if(addressBook.length > 0) {
+                let persons = searchPersons();
+                if(persons.length > 0)
+                    persons.forEach(contact => console.log(contact.firstName + " " + contact.lastName));
+                else
+                    console.log("No persons found.")
+            }
+            else
+                console.log("No contacts in addressbook.");
+            break;
+        case '6':
             addressBook.forEach(contact => console.log(contact.toString()));
             break;
         case '0':
@@ -154,4 +166,20 @@ function duplicateCheck(contact) {
         return false;
     else
         return true;
+}
+
+function searchPersons(){
+    let persons = new Array();
+    let choice = prompt("Search persons in city or state : 1. City 2. State ");
+    switch(choice){
+        case '1':
+            let city = prompt("Enter city name : ");
+            persons = addressBook.filter((contact) => contact.city == city);
+            break;
+        case '2':
+            let state = prompt("Enter state name : ");
+            persons = addressBook.filter((contact) => contact.state == state);
+            break;
+    }
+    return persons;
 }
